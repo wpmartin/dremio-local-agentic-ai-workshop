@@ -1,0 +1,19 @@
+**Dataset of taxi trips in New York City.**
+
+The raw, sample iceberg table has been formatted to update data types and column names.
+
+**New columns:**
+* "pickup_date" derived from "pickup_datetime",
+* "pickup_time" derived" from "pickup_datetime".
+
+**Data type changes:**
+* "pickup_date" converted to 'YYYY-MM-DD' date format,
+* "pickup_time" converted to 'HH24:MI:SS' time format,
+* "trip_distance_mi" converted to float,
+* "fare_amount" converted to float,
+* "tip_amount" converted to float,
+* "total_amount" converted to float,
+* "passenger_count" converted to integer.
+
+**Column name changes:**
+* "trip_distance_mi" to "trip_distance"
