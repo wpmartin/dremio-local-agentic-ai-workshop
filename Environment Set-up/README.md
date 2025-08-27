@@ -45,9 +45,3 @@ Once you are inside Dremio, we can begin adding our data sources by clicking the
 
     <img src=./images/image-0.2.webp>
     <img src=./images/image-0.3.webp>
-
-```
-pip install dbt-dremio
-```
-
-With that done we now have our development environment fully set up and we are ready to move onto using dbt!
