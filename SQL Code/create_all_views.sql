@@ -1,5 +1,5 @@
 -- Create bronze folder in the rise catalog
-CREATE FOLDER catalog.rise
+CREATE FOLDER catalog.rise;
 CREATE FOLDER catalog.rise.bronze;
 CREATE FOLDER catalog.rise.silver;
 CREATE FOLDER catalog.rise.gold;
