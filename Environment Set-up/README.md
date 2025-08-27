@@ -46,26 +46,6 @@ Once you are inside Dremio, we can begin adding our data sources by clicking the
     <img src=./images/image-0.2.webp>
     <img src=./images/image-0.3.webp>
 
-## Creating a Python Virtual Environment and Installing dbt
-
-Dremio has its own dbt connector, called `dbt-dremio`, which we use to connect Dremio to dbt Core (connection to dbt Cloud not available at the time of writing). This package requires Python 3.9.x or later to be installed. If you do not have Python or the required version please install or update that now. You should always isolate your python dependencies by creating a virtual environment for each project.
-
-Command to create the environment for this course:
-
-```
-python -m venv dbt-dremio
-```
-
-This will create a `dbt-dremio` folder with your virtual environment we want to run the activate script in that folder:
-
-- Linux/Mac `source dbt-dremio/bin/activate`
-- Windows (CMD) `dbt-dremio\Scripts\activate`
-- Windows (powershell) `.\dbt-dremio\Scripts\Activate.ps1`
-
-This script will update the `pip` and `python` command in your active shell to use the virtual environment not your global python environment.
-
-Now we can install `dbt-dremio`.
-
 ```
 pip install dbt-dremio
 ```
