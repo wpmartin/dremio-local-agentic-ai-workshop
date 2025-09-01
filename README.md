@@ -25,7 +25,7 @@ For this tutorial, we will be creating a data lakehouse on your laptop. We will 
 
 As such, make sure you have Docker installed, and if using Docker Desktop you may have to make sure you have at least 6GB of memory allocated to Docker. 
 
-## Setting up a Minio Data Lake and Nessie Catalog
+## Setting up a MinIO Data Lake and Nessie Catalog
 
 First, let's spin up our services using the provided `docker-compose.yml` and with the command:
 
@@ -45,10 +45,10 @@ After a minute or two, Dremio should be up and running and we can visit it in th
 
 Your Username and Password will be used later to connect Dremio to dbt, so please remember them.
 
-## Connecting Our Data Sources to Dremio
+## Connecting Your Data Sources to Dremio
 Once you are inside Dremio, we can begin adding our data sources by clicking the "Add Source" button in the bottom left corner.
 
-### Add Our Data Catalog Source
+### Add Your Data Catalog Source
   - Select Nessie from "Add Source"
   - On the General Tab
     - name: `catalog`
