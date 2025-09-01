@@ -1,9 +1,33 @@
--- Create gold folder in the workshop catalog
+-- Create bronze folder in the workshop catalog
+CREATE FOLDER catalog.workshop;
+CREATE FOLDER catalog.workshop.bronze;
+CREATE FOLDER catalog.workshop.silver;
 CREATE FOLDER catalog.workshop.gold;
 
 -- Create raw copies of the sample weather datasets in the bronze-layer
+CREATE VIEW catalog.workshop.bronze.trips_raw AS SELECT * FROM Samples."samples.dremio.com"."NYC-taxi-trips.csv";
 CREATE VIEW catalog.workshop.bronze.nyc_weather_raw AS SELECT * FROM Samples."samples.dremio.com"."NYC-weather.csv";
 CREATE VIEW catalog.workshop.bronze.sf_weather_raw AS SELECT * FROM Samples."samples.dremio.com"."SF weather 2018-2019.csv";
+
+-- Create silver-layer trips View with cleaned attribute names
+CREATE VIEW catalog.workshop.silver.trips AS SELECT 
+    TO_TIME(pickup_time, 'HH24:MI:SS', 1) AS pickup_time,
+    TO_DATE(pickup_date, 'YYYY-MM-DD', 1) AS pickup_date,
+    passenger_count,
+    trip_distance,
+    fare_amount,
+    tip_amount,
+    total_amount
+FROM   (SELECT 
+            CASE WHEN LENGTH(SUBSTR(nyc_trips."pickup_datetime", 12, LENGTH(nyc_trips."pickup_datetime") - 15)) > 0 THEN SUBSTR(nyc_trips."pickup_datetime", 12, LENGTH(nyc_trips."pickup_datetime") - 15) ELSE NULL END AS pickup_time,
+            CASE WHEN LENGTH(SUBSTR(nyc_trips."pickup_datetime", 1, 10)) > 0 THEN SUBSTR(nyc_trips."pickup_datetime", 1, 10) ELSE NULL END AS pickup_date,
+            passenger_count,
+            trip_distance_mi AS trip_distance,
+            fare_amount,
+            tip_amount,
+            total_amount
+        FROM  catalog.workshop.bronze.trips_raw AS nyc_trips
+) nested_0;
 
 -- Create silver-layer weather View with cleaned attribute names and data types
 CREATE VIEW catalog.workshop.silver.nyc_weather AS SELECT 
@@ -46,5 +70,4 @@ CREATE VIEW catalog.workshop.gold.trips_enriched AS SELECT
     temp_max,
     temp_min
 FROM 
-    catalog.workshop.silver.trips as t INNER JOIN catalog.workshop.silver.nyc_weather as w ON t.pickup_date = w.calendar_date
-    LIMIT 30000000;
+    catalog.workshop.silver.trips as t INNER JOIN catalog.workshop.silver.nyc_weather as w ON t.pickup_date = w.calendar_date;
