@@ -2,15 +2,15 @@
 
 ## Useful links
 - [Dremio docs](https://docs.dremio.com)
-- [Dremio MCP server repository](https://github.com/dremio/dremio-mcp)
+- [Dremio MCP server repo](https://github.com/dremio/dremio-mcp)
 - [A blog post tutorial for using the Dremio MCP Server with any LLM Model](https://www.dremio.com/blog/using-the-dremio-mcp-server-with-any-llm-model/)
 
-This repository is to accompany Dremio's In-Person Agentic AI Workshops. It contains SQL scripts that refine sample Dremio datasets to create a basic, three-layer medallion-style data pipeline, which will then be interrogated using an Agentic AI.
+This repository is to accompany Dremio's In-Person Agentic AI Workshops. The intent is to refine sample Dremio datasets to create a basic, three-layer medallion-style data pipeline, which will then be interrogated using an Agentic AI. The Agent will be connected to Dremio using the Dremio MCP server, and will use Claude Desktop as the frontend.
 
 - You will deploy and run Dremio locally on your laptop, via Docker.
-- You will then be creating virtual datasets (Views) in the Dremio UI and saving them in the Iceberg format in the data catalog.
+- You will then be creating virtual datasets (Views) in the Dremio UI and saving them in the Iceberg format in a data catalog.
 - This directory contains the following files:
-    - `docker-compose.yml` - will create containers to run Dremio, minIO (for object storage), and a data catalog.
+    - `docker-compose.yml` - will create containers to run Dremio, object storage, and a data catalog.
     - `create_all_views.sql` - will create and save all views in the medallion folder structure needed for the workshop.
     - `get_pat.py` - will access your Dremio instance and generate a Personal Access Token (PAT) via REST API for use with the MCP Server.
 
@@ -21,7 +21,7 @@ This repository is to accompany Dremio's In-Person Agentic AI Workshops. It cont
 
 # Setting up your environment
 
-For this tutorial, we will be creating a data lakehouse on your laptop. We will be spinning up Minio as a local data lake, using Nessie as our data catalog, and connecting these as data sources to Dremio. This may sound complicated but is easily achieved using Docker. 
+For this tutorial, we will be creating a data lakehouse on your laptop. We will be spinning up MinIO as a local data lake, using Nessie as our data catalog, and connecting these as data sources to Dremio. This may sound complicated but is easily achieved using Docker. 
 
 As such, make sure you have Docker installed, and if using Docker Desktop you may have to make sure you have at least 6GB of memory allocated to Docker. 
 
@@ -98,10 +98,10 @@ Now repeat this same process for two more datasets, `NYC-weather.csv` and `SF we
 
 ## Creating the data pipeline
 
-Now that the dataasets are all tables you generate Iceberg tables in the data catalog. Go to the SQL editor and run the SQL code found in the file `create_all_views.sql`. This will establish a medallion style data structure within your data catalog, saving the outputs as views:
+With all the datasets formated as tables you can now generate Iceberg views in the data catalog. Go to the SQL editor and run the SQL code found in the file `create_all_views.sql`. This will establish a medallion style data structure within your data catalog, saving the outputs as views:
 - **bronze**: raw, 1-to-1 views of the Sample tables
 - **silver**: cleaned and formatted views of the two NYC datasets.
-- **gold**: an enirched view of the NYC taxi trips dataset created by joining the NYC weather dataset.
+- **gold**: an enriched view of the NYC taxi trips dataset created by joining the NYC weather dataset.
 
 # Installing the Dremio MCP Server
 To grant our Agentic AI access to Dremio we will be using the offical Dremio Model Context Protocol (MCP) server. The MCP server will run locally on your machine that also runs the LLM frontend. For this workshop you will be using Claude Desktop as the LLM frontend and LLM model.
@@ -111,5 +111,6 @@ Please refer to the [installation instructions](https://github.com/dremio/dremio
 2) Install the `uv` package manager.
 3) Install the `dremio-simple-query` library and run the script `get_pat.py` to generate your PAT token.
 4) Generate your Dremio config file, using this PAT token and the uri `http://localhost:9047`.
-5) Generate your Claude config file.
-6) Launch Claude Desktop.
+5) Download and install Claude Desktop.
+6) Generate your Claude config file.
+7) Launch Claude Desktop.
