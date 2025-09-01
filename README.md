@@ -98,13 +98,13 @@ Now repeat this same process for two more datasets, `NYC-weather.csv` and `SF we
 
 ## Creating the data pipeline
 
-With all the datasets formated as tables you can now generate Iceberg views in the data catalog. Go to the SQL editor and run the SQL code found in the file `create_all_views.sql`. This will establish a medallion style data structure within your data catalog, saving the outputs as views:
+With all the datasets formated as tables you can now generate Iceberg views in the data catalog. Go to the SQL editor in the Dremio UI and run the SQL code found in the file `create_all_views.sql`. This will establish a medallion style data structure within your data catalog and save the outputs as views:
 - **bronze**: raw, 1-to-1 views of the Sample tables
 - **silver**: cleaned and formatted views of the two NYC datasets.
 - **gold**: an enriched view of the NYC taxi trips dataset created by joining the NYC weather dataset.
 
 # Installing the Dremio MCP Server
-To grant our Agentic AI access to Dremio we will be using the offical Dremio Model Context Protocol (MCP) server. The MCP server will run locally on your machine that also runs the LLM frontend. For this workshop you will be using Claude Desktop as the LLM frontend and LLM model.
+To grant our Agentic AI access to Dremio we will be using the offical Dremio Model Context Protocol (MCP) server. The MCP server will run locally on your machine along with the LLM frontend. For this workshop you will be using Claude Desktop as the LLM frontend and a Claude LLM model.
 
 Please refer to the [installation instructions](https://github.com/dremio/dremio-mcp?tab=readme-ov-file#installation) on the Dremio MCP Server repo to install and configure the MCP server. The steps you will be doing are:
 1) Clone or download the dremio-mcp repo.
@@ -114,3 +114,5 @@ Please refer to the [installation instructions](https://github.com/dremio/dremio
 5) Download and install Claude Desktop.
 6) Generate your Claude config file.
 7) Launch Claude Desktop.
+
+When complete, you can start Claude and start using the MCP server.
